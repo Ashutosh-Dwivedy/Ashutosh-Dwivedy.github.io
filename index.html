@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashutosh Dwivedy — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue: #0E2A44;
+  --blue-panel: #163150;
+  --line: #6E93B5;
+  --line-dim: #2C4966;
+  --paper: #ECE6D6;
+  --paper-dim: #9FB1C2;
+  --safety: #FF5A1F;
+  --display: 'Space Grotesk', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+*{ box-sizing: border-box; margin:0; padding:0; }
+html{ scroll-behavior: smooth; }
+body{
+  background: var(--blue);
+  color: var(--paper);
+  font-family: var(--sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+::selection{ background: var(--safety); color: var(--blue); }
+a{ color: inherit; }
+:focus-visible{ outline: 2px solid var(--safety); outline-offset: 3px; }
+.wrap{ max-width: 880px; margin: 0 auto; padding: 0 28px; position: relative; }
+
+/* ---------- blueprint grid backdrop ---------- */
+.grid-bg{
+  position: fixed; inset: 0; z-index: -1;
+  background-image:
+    linear-gradient(var(--line-dim) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-dim) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.35;
+}
+
+/* ---------- registration marks (corners) ---------- */
+.reg-mark{
+  position: fixed; width: 26px; height: 26px; z-index: 5; pointer-events:none;
+  opacity: 0.55;
+}
+.reg-mark::before, .reg-mark::after{ content:''; position:absolute; background: var(--line); }
+.reg-mark::before{ top:50%; left:0; width:100%; height:1px; transform: translateY(-50%); }
+.reg-mark::after{ left:50%; top:0; height:100%; width:1px; transform: translateX(-50%); }
+.reg-mark span{
+  position:absolute; top:50%; left:50%; width:8px; height:8px;
+  border:1px solid var(--line); border-radius:50%; transform: translate(-50%,-50%);
+}
+.reg-tl{ top:16px; left:16px; } .reg-tr{ top:16px; right:16px; }
+.reg-bl{ bottom:16px; left:16px; } .reg-br{ bottom:16px; right:16px; }
+@media (max-width: 640px){ .reg-mark{ display:none; } }
+
+/* ---------- dimension-line divider ---------- */
+.dim-rule{
+  display:flex; align-items:center; gap: 10px;
+  font-family: var(--mono); font-size: 11px; color: var(--paper-dim);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 34px;
+}
+.dim-rule .tick{ width:1px; height:10px; background: var(--line); }
+.dim-rule .seg{ flex:1; height:1px; background: var(--line-dim); position:relative; }
+.dim-rule .seg::before, .dim-rule .seg::after{
+  content:''; position:absolute; top:-3px; width:1px; height:7px; background: var(--line);
+}
+.dim-rule .seg::before{ left:0; } .dim-rule .seg::after{ right:0; }
+
+/* ---------- title block nav ---------- */
+nav{
+  position: sticky; top:0; z-index: 20;
+  background: rgba(14,42,68,0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid var(--line);
+}
+.titleblock{
+  display:grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr auto;
+  align-items: stretch;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.tb-cell{
+  padding: 10px 16px;
+  border-left: 1px solid var(--line-dim);
+  display:flex; flex-direction:column; justify-content:center; gap:2px;
+}
+.tb-cell:first-child{ border-left:none; }
+.tb-label{ color: var(--line); letter-spacing:0.1em; font-size:9px; text-transform:uppercase; }
+.tb-value{ color: var(--paper); font-weight:500; }
+.tb-name .tb-value{ font-family: var(--display); font-size: 14px; font-weight:700; letter-spacing:0.01em; }
+.tb-links{ display:flex; align-items:center; gap: 18px; padding: 0 16px; border-left: 1px solid var(--line-dim); }
+.tb-links a{ text-decoration:none; color: var(--paper-dim); transition: color .15s ease; }
+.tb-links a:hover{ color: var(--safety); }
+@media (max-width: 760px){
+  .titleblock{ grid-template-columns: 1fr; }
+  .tb-cell, .tb-links{ border-left:none; border-top: 1px solid var(--line-dim); padding: 8px 16px; }
+  .tb-links{ flex-wrap: wrap; }
+}
+
+/* ---------- hero ---------- */
+header.hero{ padding: 80px 0 60px; }
+.eyebrow{
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--safety); display:flex; align-items:center; gap: 10px; margin-bottom: 20px;
+}
+.eyebrow::before{ content:''; width: 18px; height:1px; background: var(--safety); }
+h1{
+  font-family: var(--display); font-weight: 700; font-size: clamp(36px, 6vw, 56px);
+  letter-spacing: -0.01em; color: var(--paper); margin-bottom: 12px;
+}
+.tagline{
+  font-family: var(--mono); font-size: clamp(14px, 2vw, 16px); color: var(--line);
+  margin-bottom: 22px; font-weight: 500;
+}
+.currently{
+  display:flex; align-items:center; gap: 10px; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 12.5px; color: var(--paper-dim);
+  margin-bottom: 28px; padding: 10px 14px; border: 1px solid var(--line-dim);
+  width: fit-content;
+}
+.currently .dot{
+  width:6px; height:6px; border-radius:50%; background: var(--safety);
+  box-shadow: 0 0 0 3px rgba(255,90,31,0.18); flex-shrink:0;
+}
+.currently .k{ color: var(--safety); text-transform:uppercase; letter-spacing:0.08em; font-size:10.5px; }
+.currently .sep{ color: var(--line-dim); }
+.hero-desc{ max-width: 540px; color: var(--paper-dim); font-size: 16px; margin-bottom: 34px; }
+.btn-row{ display:flex; gap: 12px; flex-wrap: wrap; }
+.btn{
+  font-family: var(--mono); font-size: 12.5px; font-weight: 600; letter-spacing: 0.03em;
+  padding: 12px 20px; text-decoration:none; border: 1px solid var(--line);
+  transition: all .15s ease; display:inline-flex; align-items:center; gap:8px;
+}
+.btn-primary{ background: var(--safety); color: var(--blue); border-color: var(--safety); }
+.btn-primary:hover{ background: var(--paper); border-color: var(--paper); }
+.btn-ghost{ color: var(--paper); }
+.btn-ghost:hover{ border-color: var(--safety); color: var(--safety); }
+
+/* ---------- schematic panel (hero visual) ---------- */
+.schem-panel{
+  margin-top: 48px; border: 1px solid var(--line); background: var(--blue-panel); position: relative;
+}
+.schem-tag{
+  position:absolute; top:-1px; left: 20px; transform: translateY(-50%);
+  background: var(--blue); padding: 0 8px; font-family: var(--mono); font-size: 10px;
+  color: var(--line); letter-spacing: 0.1em; text-transform:uppercase;
+}
+.schem-grid{ display:grid; grid-template-columns: repeat(2, 1fr); }
+.schem-cell{
+  border-left: 1px solid var(--line-dim); padding: 22px 24px; position:relative;
+}
+.schem-cell:first-child{ border-left:none; }
+.schem-cell .fig{ font-family: var(--mono); font-size: 10px; color: var(--line); margin-bottom: 4px; letter-spacing:0.06em; }
+.schem-cell .stat{ font-family: var(--display); font-size: 19px; font-weight:700; color: var(--paper); margin-bottom: 14px; }
+.schem-cell ul{ list-style:none; }
+.schem-cell li{
+  font-family: var(--mono); font-size: 12.5px; color: var(--paper-dim);
+  padding: 5px 0; border-top: 1px dashed var(--line-dim); display:flex; align-items:baseline; gap:8px;
+}
+.schem-cell li:first-of-type{ border-top:none; }
+.schem-cell li::before{ content:'—'; color: var(--line); }
+@media (max-width: 640px){ .schem-grid{ grid-template-columns: 1fr; } .schem-cell{ border-left:none; border-top:1px solid var(--line-dim); } .schem-cell:first-child{ border-top:none; } }
+
+/* ---------- section shell ---------- */
+section{ padding: 60px 0; }
+.section-head{ display:flex; align-items: baseline; gap: 14px; margin-bottom: 30px; }
+.section-head .idx{ font-family: var(--mono); font-size: 12px; color: var(--safety); }
+.section-head h2{
+  font-family: var(--display); font-size: 22px; color: var(--paper); font-weight: 700; letter-spacing: -0.01em;
+}
+.section-head .rule{ flex:1; height:1px; background: var(--line-dim); }
+
+/* ---------- project panel ---------- */
+.project-card{ border: 1px solid var(--line); background: var(--blue-panel); position: relative; }
+.project-head{ padding: 26px 28px 0; }
+.project-card h3{ font-family: var(--display); font-size: 22px; color: var(--paper); font-weight:700; margin-bottom: 6px; }
+.project-sub{ color: var(--line); font-family: var(--mono); font-size: 12.5px; margin-bottom: 18px; }
+.project-body{ padding: 0 28px; }
+.project-card p{ color: var(--paper-dim); margin-bottom: 14px; font-size: 15px; }
+.project-card code{ font-family: var(--mono); background: var(--blue); padding: 1px 5px; font-size: 13px; color: var(--paper); border: 1px solid var(--line-dim); }
+.pivot-box{
+  background: var(--blue); border-left: 2px solid var(--safety); padding: 16px 18px; margin: 22px 28px;
+}
+.pivot-box .label{ font-family: var(--mono); font-size: 10.5px; color: var(--safety); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.pivot-box p{ color: var(--paper-dim); font-size: 14px; margin-bottom: 0; }
+.tags{ display:flex; flex-wrap:wrap; gap: 0; padding: 0 28px; margin-bottom: 6px; }
+.tags span{
+  font-family: var(--mono); font-size: 11px; color: var(--paper-dim); border: 1px solid var(--line-dim);
+  padding: 5px 10px; margin: 0 8px 8px 0;
+}
+.project-links{ display:flex; gap: 12px; flex-wrap: wrap; padding: 4px 28px 28px; }
+
+/* ---------- certifications ---------- */
+.cert-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.cert-card{
+  border: 1px solid var(--line-dim); padding: 20px; position: relative; margin: -1px 0 0 -1px;
+}
+.cert-card .cert-tag{ font-family: var(--mono); color: var(--safety); font-size: 10px; margin-bottom: 10px; letter-spacing: 0.08em; }
+.cert-card h4{ font-family: var(--display); font-size: 15px; color: var(--paper); margin-bottom: 6px; font-weight: 600; }
+.cert-card p{ color: var(--paper-dim); font-size: 13px; font-family: var(--mono); }
+.cert-card.placeholder{ border-style: dashed; opacity: 0.55; }
+.cert-card a.cert-link{ display:inline-block; margin-top:10px; font-family: var(--mono); font-size:11.5px; color: var(--line); text-decoration:none; border-bottom:1px solid var(--line-dim); }
+.cert-card a.cert-link:hover{ color: var(--safety); border-color: var(--safety); }
+
+/* ---------- skills ---------- */
+.skills-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; }
+.skill-group{ border-left: 1px solid var(--line-dim); padding-left: 22px; }
+.skill-group:first-child{ border-left: none; padding-left: 0; }
+.skill-group .tag{ font-family: var(--mono); font-size: 11px; color: var(--safety); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; display:block; }
+.skill-group ul{ list-style:none; }
+.skill-group li{ color: var(--paper-dim); font-size: 14px; padding: 7px 0; border-bottom: 1px solid var(--line-dim); font-family: var(--mono); }
+@media (max-width: 700px){ .skills-grid{ grid-template-columns: 1fr; gap: 24px; } .skill-group{ border-left:none; padding-left:0; } }
+
+/* ---------- resume ---------- */
+.resume-panel{
+  border: 1px dashed var(--line); padding: 24px 28px; display:flex; align-items:center;
+  justify-content:space-between; flex-wrap: wrap; gap: 16px;
+}
+.resume-panel p{ color: var(--paper-dim); font-size: 14px; max-width: 420px; font-family: var(--mono); }
+.resume-panel strong{ color: var(--paper); }
+
+/* ---------- footer / title block bottom ---------- */
+footer{ padding: 50px 0 40px; }
+.contact-row{ display:flex; gap: 0; flex-wrap: wrap; margin-top: 22px; margin-bottom: 36px; }
+.contact-card{
+  flex:1; min-width: 200px; border: 1px solid var(--line-dim); padding: 18px 20px;
+  text-decoration:none; transition: border-color .15s ease; margin: 0 -1px -1px 0;
+}
+.contact-card:hover{ border-color: var(--safety); }
+.contact-card .k{ font-family: var(--mono); font-size: 10.5px; color: var(--safety); letter-spacing: 0.08em; text-transform: uppercase; display:block; margin-bottom: 6px; }
+.contact-card .v{ color: var(--paper); font-family: var(--mono); font-size: 13.5px; word-break: break-all; }
+.foot-line{ font-family: var(--mono); font-size: 11px; color: var(--paper-dim); display:flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-top: 1px solid var(--line-dim); padding-top: 20px; }
+
+/* ---------- reveal on scroll ---------- */
+.reveal{ opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.in{ opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior: auto; } .reveal{ transition: none; opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="reg-mark reg-tl"><span></span></div>
+<div class="reg-mark reg-tr"><span></span></div>
+<div class="reg-mark reg-bl"><span></span></div>
+<div class="reg-mark reg-br"><span></span></div>
+
+<nav>
+  <div class="titleblock">
+    <div class="tb-cell tb-name">
+      <span class="tb-label">Name</span>
+      <span class="tb-value">Ashutosh Dwivedy</span>
+    </div>
+    <div class="tb-cell">
+      <span class="tb-label">Dwg No.</span>
+      <span class="tb-value">PORTFOLIO&nbsp;001</span>
+    </div>
+    <div class="tb-cell">
+      <span class="tb-label">Scale</span>
+      <span class="tb-value">1 : 1</span>
+    </div>
+    <div class="tb-cell">
+      <span class="tb-label">Rev</span>
+      <span class="tb-value" id="rev">—</span>
+    </div>
+    <div class="tb-links">
+      <a href="#work">Work</a>
+      <a href="#certs">Certs</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">High School · Engineering / Cybersecurity / Mechatronics</div>
+    <h1>Ashutosh Dwivedy</h1>
+    <div class="tagline">// Curious about how systems work — and how they break.</div>
+    <div class="currently">
+      <span class="dot"></span>
+      <span class="k">Currently</span>
+      <span>HTB Pentester path</span>
+      <span class="sep">·</span>
+      <span>Home network monitoring dashboard</span>
+    </div>
+    <p class="hero-desc">
+      High school student exploring engineering and cybersecurity through independent
+      projects, hands-on coursework, and innovation challenges. I like taking things apart
+      to understand them, then building tools that put that understanding to use.
+    </p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="#work">View my work</a>
+      <a class="btn btn-ghost" href="mailto:ashutosshdwivedy@proton.me">Email me</a>
+      <a class="btn btn-ghost" href="https://github.com/Ashutosh-Dwivedy" target="_blank" rel="noopener">GitHub</a>
+    </div>
+
+    <div class="schem-panel reveal">
+      <div class="schem-tag">Spec Summary</div>
+      <div class="schem-grid">
+        <div class="schem-cell">
+          <div class="fig">Fig. 01</div>
+          <div class="stat">Cybersecurity</div>
+          <ul>
+            <li>Networking fundamentals</li>
+            <li>Linux administration</li>
+            <li>Python scripting</li>
+            <li>Red teaming (in progress)</li>
+          </ul>
+        </div>
+        <div class="schem-cell">
+          <div class="fig">Fig. 02</div>
+          <div class="stat">Engineering &amp; Electronics</div>
+          <ul>
+            <li>Arduino / embedded projects</li>
+            <li>Electronics fundamentals</li>
+            <li>Hardware hacking (self-taught)</li>
+            <li>Mechatronics (self-taught)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap"><div class="dim-rule"><span class="tick"></span><span class="seg"></span><span>Sheet 1 of 1</span><span class="seg"></span><span class="tick"></span></div></div>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">§1</span>
+      <h2>Projects</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-head">
+        <h3>PortPatrol</h3>
+        <div class="project-sub">Automated port scanner &amp; Linux security hardening utility — Python</div>
+      </div>
+      <div class="project-body">
+        <p>
+          Most open ports on a personal or self-hosted Linux system go unnoticed until they're
+          exploited. Tools like Nmap are excellent at finding them, but stop at detection — the user
+          is left to research the service, decide if it's risky, and figure out how to fix it across
+          several distro-specific commands. PortPatrol closes that gap: it scans, identifies, and
+          remediates in one guided workflow.
+        </p>
+        <p>
+          It runs a multithreaded scan across a configurable port range using a thread-safe work
+          queue, double-checks every result to rule out transient false positives, then queries the
+          kernel's live socket table directly via <code>ss -tunlp</code> to identify the exact process
+          and PID behind each open port — filtering out anything essential (PID &lt; 1000) so you can't
+          accidentally disable a core service. For whatever's left, it presents five remediation
+          options — block, kill, upgrade, deploy fail2ban, or skip — and executes the right command
+          for your distro automatically, whether that's <code>ufw</code>, <code>firewall-cmd</code>, or <code>iptables</code>.
+        </p>
+      </div>
+      <div class="pivot-box">
+        <div class="label">Design decision</div>
+        <p>
+          Early versions used banner grabbing to identify services — reading what each service
+          announces about itself. It worked, but banners can be spoofed, silent, or simply absent.
+          Since PortPatrol is built for hardening the local machine (not scanning remote,
+          unknown targets), I switched to querying the kernel's socket table directly via
+          <code>ss</code> instead — it reports exactly what the OS knows to be true, not what a
+          service chooses to say about itself.
+        </p>
+      </div>
+      <div class="tags">
+        <span>Python</span>
+        <span>Threading &amp; Queue</span>
+        <span>Socket Programming</span>
+        <span>Linux (Debian / RHEL / Arch)</span>
+        <span>ufw · firewalld · iptables</span>
+        <span>fail2ban</span>
+        <span>subprocess / argparse</span>
+      </div>
+      <div class="project-links">
+        <a class="btn btn-primary" href="https://github.com/Ashutosh-Dwivedy/PortPatrol" target="_blank" rel="noopener">View repo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="dim-rule"><span class="tick"></span><span class="seg"></span><span>§2</span><span class="seg"></span><span class="tick"></span></div></div>
+
+<section id="certs">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">§2</span>
+      <h2>Certifications</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="cert-grid reveal">
+      <div class="cert-card">
+        <div class="cert-tag">[ Cert ]</div>
+        <h4>Introduction to Networking</h4>
+        <p>Cisco Networking Academy · 2026</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-tag">[ Cert ]</div>
+        <h4>Vivo Ignite Changemaker's Challenge</h4>
+        <p>2026</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-tag">[ Cert ]</div>
+        <h4>Vivo Ignite — Competition Participation</h4>
+        <p>2026</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="dim-rule"><span class="tick"></span><span class="seg"></span><span>§3</span><span class="seg"></span><span class="tick"></span></div></div>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">§3</span>
+      <h2>Skills &amp; Coursework</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <span class="tag">Languages &amp; Tools</span>
+        <ul>
+          <li>Python</li>
+          <li>Bash / CLI tooling</li>
+          <li>Git &amp; GitHub</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <span class="tag">Systems</span>
+        <ul>
+          <li>Linux administration (Debian-based / Kali)</li>
+          <li>Process &amp; service management</li>
+          <li>Concurrent / multithreaded programming</li>
+          <li>VirtualBox test environments</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <span class="tag">Security Concepts</span>
+        <ul>
+          <li>Port scanning &amp; enumeration</li>
+          <li>Firewall configuration</li>
+          <li>Service hardening &amp; remediation</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <span class="tag">Coursework</span>
+        <ul>
+          <li>Cisco — Introduction to Networking (completed)</li>
+          <li>TryHackMe — Windows Fundamentals 1 &amp; 2</li>
+          <li>HTB Academy — Introduction to Networking</li>
+          <li>HTB Academy — Network Analysis Fundamentals</li>
+          <li>HTB Academy — Linux Fundamentals (in progress)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="dim-rule"><span class="tick"></span><span class="seg"></span><span>§4</span><span class="seg"></span><span class="tick"></span></div></div>
+
+<section id="resume">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">§4</span>
+      <h2>Resume</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="resume-panel reveal">
+      <p><strong>Resume in progress.</strong> A downloadable version is coming soon — in the meantime, reach out directly by email.</p>
+      <a class="btn btn-ghost" href="mailto:ashutosshdwivedy@proton.me">Email me</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="idx">§5</span>
+      <h2>Contact</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="contact-row reveal">
+      <a class="contact-card" href="mailto:ashutosshdwivedy@proton.me">
+        <span class="k">Email</span>
+        <span class="v">ashutosshdwivedy@proton.me</span>
+      </a>
+      <a class="contact-card" href="https://github.com/Ashutosh-Dwivedy" target="_blank" rel="noopener">
+        <span class="k">GitHub</span>
+        <span class="v">Ashutosh-Dwivedy</span>
+      </a>
+    </div>
+    <div class="foot-line">
+      <span></span>
+      <span id="year"></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('rev').textContent = new Date().toISOString().slice(0,10).replace(/-/g,'.');
+const revealEls = document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el=>io.observe(el));
+} else {
+  revealEls.forEach(el=>el.classList.add('in'));
+}
+</script>
+</body>
+</html>
